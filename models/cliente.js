@@ -3,17 +3,17 @@ const { Schema, model} = require("mongoose") /*Esta es otra forma de importar mo
                                                 desestructurando el objeto */
 
 // 1 - Crear Esquema
-const clienteSchema = mongoose.Schema( {
-    cedula: {Type: String, unique: true},
-    tipoDoc: String,
-    nombre: String,
-    apellido: String,
+const clienteSchema = Schema( {
+    cedula: {type: String, unique: true},
+    tipoDoc: {type: String, enum: ["Cédula de ciudadanía","Pasaporte","Tarjeta de identidad","Número de extrangería"]},
+    nombre: {type: String, required: [true, "El nombre es obligatorio"]},
+    apellido: {type: String, required: [true, "El apellido es obligatorio"]},
     telefono: String,
     password: String
 } )
 
 // 2 - Crear el Modelo
 
-ClienteModel = mongoose.model( "cliente" , clienteSchema );
+const ClienteModel = model( "cliente" , clienteSchema );
 
 module.exports = ClienteModel

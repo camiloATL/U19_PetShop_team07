@@ -3,9 +3,9 @@ const express = require("express"); //Importar el servicio
 class Server {
   constructor() {
     this.app = express(); //se gurda en variable la función
-    this.rutas()
+    this.rutas();
     this.app.listen(3000);
-    this.middLeware()
+    this.middLeware();
   }
 
   rutas() {
@@ -20,14 +20,14 @@ class Server {
       response.send(request.body);
     });
     //Importante en este arquivo instalar: npm i express
+    //https://github.com/expressjs/express
   }
 
-    //Esta funcion se ejecuta antes de ejecutar la ruta con: .use
-    //Dentro de la funcion hace un parse para entender o analizar el formato json
-  middLeware(){
-    this.app.use( express.json)
+  //Esta funcion se ejecuta antes de ejecutar la ruta con: .use
+  //Dentro de la funcion hace un parse para entender o analizar el formato json
+  middLeware() {
+    this.app.use(express.json);
   }
-
 }
 
-module.exports = Server
+module.exports = Server;

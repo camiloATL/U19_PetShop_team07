@@ -14,6 +14,6 @@ const clienteSchema = Schema( {
 
 // 2 - Crear el Modelo
 
-const ClienteModel = model( "cliente" , clienteSchema );
+const ClienteModel = model( "cliente" , clienteSchema ); // El String es el nombre de la colección
 
 module.exports = ClienteModel

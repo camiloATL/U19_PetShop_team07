@@ -1,24 +1,25 @@
 const express = require("express"); //Importar el servicio
+const crearUsuario = require("../controllers/clienteControl");
 
 class Server {
   constructor() {
+    this.port = 3000
     this.app = express(); //se gurda en variable la función
-    this.rutas();
-    this.app.listen(3000);
+    this.app.use(express.json);
+    this.routes();
+    this.app.listen(this.port, () => {
+      console.log("Se está ejecutando la app")
+    });
     this.middLeware();
   }
-
-  rutas() {
+  
+  routes() {
     // Primer argumento es la ruta:
     //Segundo argumento es el controlador
-    this.app.get("/", (request, response) => {
-      response.send("");
-    });
+    //RUTA PARA CREAR USUARIO
+    this.app.post("/usuario", crearUsuario);
 
-    this.app.post("/crear-cliente", (request, response) => {
-      console.log(request.body);
-      response.send(request.body);
-    });
+
     //Importante en este arquivo instalar: npm i express
     //https://github.com/expressjs/express
   }

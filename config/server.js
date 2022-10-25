@@ -1,5 +1,7 @@
 const express = require("express"); //Importar el servicio
-const crearUsuario = require("../controllers/clienteControl");
+
+const crearCliente = require("../controllers/clienteControl");
+const conexionDB = require("./database");
 
 class Server {
   constructor() {
@@ -11,13 +13,14 @@ class Server {
       console.log("Se está ejecutando la app")
     });
     this.middLeware();
+    conexionDB()
   }
   
   routes() {
     // Primer argumento es la ruta:
     //Segundo argumento es el controlador
     //RUTA PARA CREAR USUARIO
-    this.app.post("/usuario", crearUsuario);
+    this.app.post("/cliente", crearCliente);
 
 
     //Importante en este arquivo instalar: npm i express

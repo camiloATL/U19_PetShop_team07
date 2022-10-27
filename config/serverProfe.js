@@ -1,31 +1,24 @@
-const express = require("express")
-
-const routerCliente = require("../routes/cliente")
-const conexionDB = require("./database")
+const express = require("express");
+const routerCliente = require("../routes/clienteRoute.js");
+const conexionDB = require("./database");
 
 class Server {
   constructor() {
-    this.port = 3000
-    this.app = express()
-    this.rutas = [
-      "/cliente"
-    ]
-    this.app.use(express.json())
-
+    this.port = 3000;
+    this.app = express();
+    this.rutas = ["/cliente"];
+    this.app.use(express.json());
     this.app.listen(this.port, () => {
-      console.log("se esta ejecutando la app")
-    })
+      console.log("se esta ejecutando la app");
+    });
+    this.routes();
 
-    this.routes()
-
-    conexionDB()
+    conexionDB();
   }
 
   routes() {
-
-    this.app.use( this.rutas[0], routerCliente )
-
+    this.app.use(this.rutas[0], routerCliente);
   }
 }
 
-module.exports = Server
+module.exports = Server;

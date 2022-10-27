@@ -11,8 +11,12 @@ const productoSchema = Schema({
         type: Schema.Types.ObjectId, 
         ref: "cliente"
     },
+    tienda: {
+        type: Schema.Types.ObjectId,
+        ref: "tienda" 
+    }
 },)
 
-const productoModel = model("producto", productoSchema);
+const ProductoModel = model("producto", productoSchema);
 
-module.exports(productoModel)
+module.exports = ProductoModel

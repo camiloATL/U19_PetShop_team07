@@ -1,26 +1,62 @@
-const express = require("express");
+const { request, response } = require("express");
 const ClienteModel = require("../models/cliente");
 
-async function crearCliente(
-  request = express.request,
-  response = express.response
-) {
-  const { cedula } = response.body;
+async function crearCliente(req = request, res = response) {
+  const { cedula } = res.body;
 
   const clienteEncontrado = await ClienteModel.findOne({
-    cedula: request.body.cedula,
+    cedula: req.body.cedula,
   });
 
   if (clienteEncontrado) {
-    response.send({ mensaje: "El cliente ya existe" });
+    res.send({ mensaje: "El cliente ya existe" });
   } else {
-    ClienteModel.create(request.body)
+    ClienteModel.create(req.body)
       .then((clienteCreado) => {
-        response.send({ mensaje: "Se creó el cliente", clienteCreado });
+        res.send({ mensaje: "Se creó el cliente", clienteCreado });
       })
       .catch(() => {
-        response.send({ mensaje: "No se creó el objeto" });
+        res.send({ mensaje: "No se creó el objeto" });
       });
   }
 }
-module.exports = crearCliente;
+
+async function getClientes(req = request, res = response) {
+  /*const { id } = req.query;
+  let cliente;
+  if (id) {
+    cliente = await ClienteModel.findById(id);
+  } else {
+    cliente = await ClienteModel.find(); //Se deja vacio para encontrar totos los clientes .find()
+  }*/
+  res.send({mesanje: "Prueba"});
+}
+
+async function getCliente(req = request, res = response) {
+  const { id } = req.params;
+  const cliente = await ClienteModel.findById(id);
+
+  res.send(cliente);
+}
+
+async function modificarCliente(req = request, res = response) {
+    
+    const {_id, ...cliente} = req.body
+
+    console.log(cliente);
+
+    //const obj = await ClienteModel.findByIdAndUpdate(id, cliente ) una forma de actualizar
+    await ClienteModel.uddateOne( {_id: id}, cliente )
+    const clienteModificado = ClienteModel.findById(id)
+    res.send(clienteModificado)
+}
+
+async function eliminarCliente(req = request, res = response) {
+    
+const {id} = req.body
+
+await ClienteModel.findByIdAndDelete(id)
+
+}
+
+module.exports = { crearCliente, getClientes, getCliente , modificarCliente, eliminarCliente};

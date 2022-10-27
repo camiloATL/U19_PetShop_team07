@@ -3,10 +3,10 @@ const {crearCliente, getClientes, getCliente, modificarCliente, eliminarCliente}
 
 const routerCliente = Router()
 
-    routerCliente.post("/cliente", crearCliente);//RUTA PARA CREAR USUARIO
-    routerCliente.get("/clientes", getClientes)//RUTA PARA LEER UN USUARIO
-    routerCliente.get("/cliente/:id", getCliente) // :id haace refericia al controlador y nombre de variable q asigné
-    routerCliente.put("/cliente",modificarCliente)
-    routerCliente.delete("/cliente", eliminarCliente)
+    routerCliente.post("", crearCliente);//RUTA PARA CREAR USUARIO
+    routerCliente.get("", getClientes)//RUTA PARA LEER UN USUARIO
+    routerCliente.get("/:id", getCliente) // :id haace refericia al controlador y nombre de variable q asigné
+    routerCliente.put("", modificarCliente)
+    routerCliente.delete("", eliminarCliente)
 
 module.exports = routerCliente

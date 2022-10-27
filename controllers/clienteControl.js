@@ -2,14 +2,12 @@ const { request, response } = require("express");
 const ClienteModel = require("../models/cliente");
 
 async function crearCliente(req = request, res = response) {
-  const { cedula } = res.body;
+  const { cedula } = req.body;
 
-  const clienteEncontrado = await ClienteModel.findOne({
-    cedula: req.body.cedula,
-  });
+  const clienteEncontrado = await ClienteModel.findOne({cedula});
 
   if (clienteEncontrado) {
-    res.send({ mensaje: "El cliente ya existe" });
+    res.status(400).send({ mensaje: "El cliente ya existe" });
   } else {
     ClienteModel.create(req.body)
       .then((clienteCreado) => {
@@ -22,14 +20,14 @@ async function crearCliente(req = request, res = response) {
 }
 
 async function getClientes(req = request, res = response) {
-  /*const { id } = req.query;
+  const { id } = req.query;
   let cliente;
   if (id) {
     cliente = await ClienteModel.findById(id);
   } else {
     cliente = await ClienteModel.find(); //Se deja vacio para encontrar totos los clientes .find()
-  }*/
-  res.send({mesanje: "Prueba"});
+  }
+  res.send(cliente);
 }
 
 async function getCliente(req = request, res = response) {

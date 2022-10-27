@@ -1,3 +1,3 @@
 const Server = require("./config/server");
 
-const server = new Server
+const server = new Server()

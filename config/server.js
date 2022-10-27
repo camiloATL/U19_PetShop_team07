@@ -1,28 +1,28 @@
-const express = require("express"); //Importar el servicio
+const express = require("express");
 const routerCliente = require("../routes/clienteRoute");
 const conexionDB = require("./database");
 
 class Server {
   constructor() {
-    this.app = express(); //se gurda en variable la función
+    this.port = 3000;
+    this.app = express();
+    this.rutas = [
+      "/cliente"
+    ]
     this.app.use(express.json);
-    this.routes();
-    this.app.listen( 3000 , () => {
-      console.log("Se está ejecutando la app");
+    
+    this.app.listen( this.port , () => {
+      console.log("Se está ejecutando la app...");
     });
-    //this.middLeware();
+    this.routes();
     conexionDB();
-    this.app.get('/', (req, res) => {
-      res.send('Hello World!')
-    })
   }
 
   routes() {
-    this.app.use("/cliente", routerCliente);
+    this.app.use(this.rutas[0], routerCliente);
   }
 
   /*Esta funcion se ejecuta antes de ejecutar la ruta con: .use
-  //Dentro de la funcion hace un parse para entender o analizar el formato json
   middLeware() {
     this.app.use(express.json);
   }*/

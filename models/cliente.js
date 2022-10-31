@@ -9,6 +9,7 @@ const clienteSchema = Schema( {
     nombre: String,//{type: String, required: [true, "El nombre es obligatorio"]},
     apellido: String,//{type: String, required: [true, "El apellido es obligatorio"]},
     telefono: String,
+    correo: String,
     password: String
 } )
 

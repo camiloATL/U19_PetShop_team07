@@ -6,11 +6,10 @@ class Server {
   constructor() {
     this.port = 3000;
     this.app = express();
+    this.app.use(express.json());
     this.rutas = [
       "/cliente"
     ]
-    this.app.use(express.json);
-    
     this.app.listen( this.port , () => {
       console.log("Se está ejecutando la app...");
     });

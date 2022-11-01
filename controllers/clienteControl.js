@@ -16,13 +16,13 @@ async function crearCliente(req = request, res = response) {
 
     //EL CLIENTE NO EXISTE SE PROCEDE A CREAR Y A ENCRIPTAR CONTRASEÑA
     
-    const passwordEncrypted = hashSync( password , genSaltSync())
+    const passwordEncrypted = hashSync(password, genSaltSync())
 
     req.body.password = passwordEncrypted
 
     ClienteModel.create(req.body)
       .then((clienteCreado) => {
-        res.send({ mensaje: "Se creó el cliente", clienteCreado });
+        res.status(201).send({ mensaje: "Se creó el cliente", clienteCreado });
       })
       .catch(() => {
         res.send({ mensaje: "No se creó el objeto" });
@@ -65,7 +65,7 @@ async function modificarCliente(req = request, res = response) {
     
     const {id, password,  ...cliente} = req.body
   if (password) {
-    const passwordEncrypted = hashSync( password , genSaltSync())
+    const passwordEncrypted = hashSync(password, genSaltSync())
     cliente.password = passwordEncrypted
   }
     //const obj = await ClienteModel.findByIdAndUpdate(id, cliente ) una forma de actualizar
@@ -80,8 +80,9 @@ async function eliminarCliente(req = request, res = response) {
     
 const {id} = req.body
 
-await ClienteModel.findByIdAndDelete(id)
+const obj = await ClienteModel.findByIdAndDelete(id)
 
+res.send("Cliente eliminado")
 }
 
 module.exports = { crearCliente, getClientes, getCliente , modificarCliente, eliminarCliente};

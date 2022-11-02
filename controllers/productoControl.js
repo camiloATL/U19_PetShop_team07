@@ -3,8 +3,12 @@ const ProductoModel = require("../models/producto")
 const path = require("path")
 //Intalar : npm i express-fileupload ***para poder cargar arcrivos al backend***
 
-function guardarImagen(req = request, res = response){
+async function guardarImagen(req = request, res = response){
 
+    const {productoid} = req.query
+
+    //Get del producto
+    const producto = await ProductoModel.findById(productoid)
 
     if (!req.files || Object.keys(req.files).length === 0) {
       return res.status(400).json({ mensaje: "No se encontro el archivo" })
@@ -18,6 +22,9 @@ function guardarImagen(req = request, res = response){
     archivo.mv(uploadPath, (error) => {
       if (error) return res.status(500).send(error)
   
+      //Carga de archivo
+      producto.imagen = archivo.name
+      producto.save()
       res.send("Archivo cargado corectamente")
     })
   
@@ -35,9 +42,19 @@ async function guardarProducto(req = request, res = response) {
     res.send({ producto, mensaje:"Seguardó el producto"})
 }
 
-function verProducto(req = request, res = response) {
+function verImagen(req = request, res = response) {
     
+    const {nombre} = req.query
+    const rutaImagen = path.join(__dirname, "../imagenes/", nombre)
+
+    res.sendFile(rutaImagen)
+}
+
+async function verProductos(req = request, res = response) {
+    const listaProductos = await ProductoModel.find()
+    res.send(listaProductos)
 }
 
 
-module.exports = {guardarProducto, guardarImagen, verProducto}
+
+module.exports = {guardarProducto, guardarImagen, verImagen, verProductos}

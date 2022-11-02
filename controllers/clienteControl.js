@@ -55,7 +55,7 @@ async function getClientes(req = request, res = response) {
 //VER UN CLIENTE
 async function getCliente(req = request, res = response) {
   const { id } = req.params;
-  const cliente = await ClienteModel.findById(id);
+  const cliente = await ClienteModel.find({correo: id});
 
   res.send(cliente);
 }

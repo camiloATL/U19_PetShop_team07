@@ -8,5 +8,5 @@ const routerCliente = Router()
     routerCliente.get("/:id", getCliente) // :id haace refericia al controlador y nombre de variable q asigné
     routerCliente.put("", modificarCliente)
     routerCliente.delete("", eliminarCliente)
-
+    
 module.exports = routerCliente

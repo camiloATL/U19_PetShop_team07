@@ -1,4 +1,13 @@
-.App {
+@import 'admin-lte/dist/css/adminlte.css';
+@import 'admin-lte/plugins/fontawesome-free/css/all.min.css';
+
+
+
+
+
+
+
+/* .App {
   text-align: center;
 }
 
@@ -35,4 +44,4 @@
   to {
     transform: rotate(360deg);
   }
-}
+} */

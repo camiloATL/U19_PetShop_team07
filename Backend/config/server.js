@@ -4,10 +4,11 @@ const routerAuth = require("../routes/auth");
 const routerCliente = require("../routes/clienteRoute");
 const routerProducto = require("../routes/productoRoutes");
 const conexionDB = require("./database");
+const cors = require("cors")
 
 class Server {
   constructor() {
-    this.port = 3000;
+    this.port = 3001;
     this.app = express();
 
     //MIDDLEWARES
@@ -16,6 +17,7 @@ class Server {
       useTempFiles : true,
       tempFileDir : '/tmp/'
     }))
+    this.app.use( cors() )
 
     this.app.listen( this.port , () => {
       console.log("Se está ejecutando la app...");

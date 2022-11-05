@@ -12,7 +12,9 @@ async function login(req = request, res = response) {
   if (cliente) {
     //Valida si las contraseñas son iguales
     if (compareSync(password, cliente.password)) {
-      sign({ id: cliente.id }, "p3tSh0pT34m7", (err, token) => {
+
+      //Se crea y se envía el token
+      sign({ id: cliente.id }, "p3tSh0pT34m7", {expiresIn: "5h"} ,(err, token) => {
         if (err) {
           res.status(500).send({ menasaje: "Hubo un error" });
         } else {

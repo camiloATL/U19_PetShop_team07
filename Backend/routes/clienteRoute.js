@@ -4,10 +4,10 @@ const validarToken = require("../middlewares/auth");
 
 const routerCliente = Router()
 
-    routerCliente.post("", crearCliente);//RUTA PARA CREAR USUARIO
-    routerCliente.get("", getClientes)//RUTA PARA LEER UN USUARIO
-    routerCliente.get("/:id", getCliente) // :id haace refericia al controlador y nombre de variable q asigné
-    routerCliente.put("", modificarCliente)
+    routerCliente.post("", [validarToken] ,crearCliente);//RUTA PARA CREAR USUARIO
+    routerCliente.get("", [validarToken] ,getClientes)//RUTA PARA LEER UN USUARIO
+    routerCliente.get("/:id", [validarToken] ,getCliente) // :id haace refericia al controlador y nombre de variable q asigné
+    routerCliente.put("", [validarToken], modificarCliente)
     routerCliente.delete("", [validarToken] ,eliminarCliente)
     
 module.exports = routerCliente

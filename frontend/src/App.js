@@ -1,30 +1,41 @@
-import { Routes, Route } from "react-router-dom";
 
-//Estilos
 import "./App.css";
-//import Home from "./pages/admin/home";
-import PrivateRoute from "./config/auth";
-import Admin from "./pages/admin";
-import Login from "./pages/login";
-import UpdateUsuario from "./pages/admin/update-usuario";
+
+import { useEffect, useState } from "react";
+import axios from "axios";
+import { BASE_URL } from "./config/constants";
+import Loading from "./shared/loading";
+import RoutesApp from "./routes";
 
 function App() {
-  return (
-    <Routes>
-      <Route
-        path="/admin"
-        element={
-          <PrivateRoute> 
-            <Admin />
-          </PrivateRoute>
-        }
-      >
-        <Route path="usuario" element={ <UpdateUsuario/> } />
+  const [isAuth, setIsAuth] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+  const token = localStorage.getItem("token");
 
-      </Route>
-      <Route path="/login" element={<Login titulo={"Omega"} />} />
-    </Routes>
-  );
+  useEffect(() => {
+    console.log("ejecutando useEffect");
+    axios
+      .get(BASE_URL + "/auth/verify", { headers: { Authorization: token } })
+      .then(() => {
+        setIsAuth(true);
+      })
+      .catch(() => {
+        setIsAuth(false);
+      })
+      .finally(() => {
+        setIsLoading(false)
+      });
+
+    return () => {};
+  }, []);
+
+  if (isLoading) {
+    return <Loading />;
+  } else {
+    return (
+      <RoutesApp isAuth={isAuth}/>
+    );
+  }
 }
 
 export default App;

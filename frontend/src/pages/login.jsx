@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
+import { BASE_URL } from "../config/constants";
 
 export default function Login( {titulo} ) {
 
@@ -13,14 +14,14 @@ export default function Login( {titulo} ) {
     const { password, email } = event.target;
 
     try {
-      const res = await axios.post("http://localhost:3001/auth/login", {
+      const res = await axios.post( BASE_URL + "/auth/login", {
         correo: email.value,
         password: password.value,
       });
       const {token} = res.data
       localStorage.setItem("token", token);
 
-      navigate("/");
+      navigate("/admin");
     } catch (error) {
       alert("Credenciales incorrectas guero");
     }
@@ -30,9 +31,9 @@ export default function Login( {titulo} ) {
     <div className="login-page">
       <div className="login-box">
         <div className="login-logo">
-          <a href="#">
+          <Link to={""}>
             <b>{titulo}</b>PetShop
-          </a>
+          </Link>
         </div>
         <div className="card">
           <div className="card-body login-card-body">
@@ -79,12 +80,12 @@ export default function Login( {titulo} ) {
               </div>
             </form>
             <p className="mb-1">
-              <a href="#">Olvidé mi contraseña</a>
+              <Link to={""}>Olvidé mi contraseña</Link>
             </p>
             <p className="mb-0">
-              <a href="#" className="text-center">
+              <Link to={""} className="text-center">
                 ¿No tienes cuenta? Registrarse
-              </a>
+              </Link>
             </p>
           </div>
         </div>

@@ -1,33 +1,84 @@
 import axios from "axios";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Header from "../../shared/header";
+import { useForm } from "react-hook-form";
+import { BASE_URL, Toast } from "../../config/constants";
+import { useParams } from "react-router-dom";
 
 export default function UpdateUsuario() {
-  function submit(event) {
+  //register extrae los datos del formulario
+  //formState es un objeto que obtiene los errores
+  const params = useParams();
 
-    event.preventDefault()
+  const [usuario, setUsuario] = useState(null);
+  const headers = { Authorization: localStorage.getItem("token") }
 
-    //1 - Desestructurar
-const {nombre, apellido, cedula, correo, password, tipoDoc, telefono} = event.target
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm();
 
-    // 2 - Crear el Body
-    const body = {
-      nombre: nombre.value,
-      apellido: apellido.value,
-      cedula: cedula.value,
-      correo: correo.value,
-      password: password.value,
-      tipoDoc: tipoDoc.value,
-      telefono: telefono.value
+  useEffect(() => {
+    if (params.id !== "new") {
+      axios
+        .get(BASE_URL + "/cliente", {
+          headers,
+          params: { id: params.id },
+        })
+        .then((res) => {
+          setUsuario(res.data);
+        })
+        .catch(() => {
+          Toast.fire({ icon: "error", title: "Hubo un error inesperado" });
+        });
     }
+    return () => {};
+  }, []);
 
-    axios.post("", body)
+  
+    //PETICION PARA CREAR USUARIO
+  function submit(data) {
+    if (params.id === "new") {
+    axios
+      .post(BASE_URL + "/cliente", data, {headers})
 
-    console.log(body);
-
-    
+      .then((res) => {
+        Toast.fire({
+          icon: "success",
+          title: "Se creo el usuario " + data.nombre,
+        })
+      })
+      .catch((err) => {
+        console.error(err);
+        Toast.fire({
+          icon: "error",
+          title: "Hubo un error al crear el usuario " + data.nombre,
+        })
+      });
+  }else{
+    axios
+    .put(BASE_URL + "/cliente", data, {headers})
+    .then((res) => {
+      Toast.fire({
+        icon: "success",
+        title: "Se modificó el usuario " + data.nombre,
+      })
+    })
+    .catch((err) => {
+      console.error(err)
+      Toast.fire({
+        icon: "error",
+        title: "Hubo un error al crear el usuario",
+      })
+    })
   }
+  
+ 
 
+    //PETICION PARA MODIFICAR USUARIO
+    
+      }
   return (
     <>
       <Header title="Crear usuario" pathName={"usuario"} path="/" />
@@ -40,27 +91,42 @@ const {nombre, apellido, cedula, correo, password, tipoDoc, telefono} = event.ta
                   <div className="card-header">
                     <h3 className="card-title">Usuario</h3>
                   </div>
-                  <form onSubmit={submit}>
+                  <form onSubmit={handleSubmit(submit)}>
                     <div className="card-body">
                       <div className="form-group">
                         <label htmlFor="nombre">Nombres</label>
                         <input
                           type="text"
-                          className="form-control"
                           id="nombre"
-                          name="nombre"
                           placeholder="Ejemplo: Camilo Andres"
+                          className={
+                            "form-control" +
+                            (errors.nombre ? " is-invalid" : "")
+                          }
+                          {...register("nombre", { required: true })}
+                          defaultValue={(params.id !== "new" ? usuario?.nombre: "")}
                         />
+                        {errors.nombre && (
+                          <span className="text-danger">
+                            El nombre es obligatorio...
+                          </span>
+                        )}
                       </div>
                       <div className="form-group">
                         <label htmlFor="apellido">Apellidos</label>
                         <input
                           type="text"
-                          className="form-control"
                           id="apellido"
-                          name="apellido"
+                          className="form-control"
                           placeholder="Ejemplo: Torres Lozano"
+                          {...register("apellido", { required: true })}
+                          defaultValue={(params.id !== "new" ? usuario?.apellido: "")}
                         />
+                        {errors.apellido && (
+                          <span className="text-danger">
+                            El apellido es obligatorio...
+                          </span>
+                        )}
                       </div>
                       <div className="form-group">
                         <label htmlFor="correo">Correo</label>
@@ -68,13 +134,23 @@ const {nombre, apellido, cedula, correo, password, tipoDoc, telefono} = event.ta
                           type="email"
                           className="form-control"
                           id="correo"
-                          name="correo"
+                          {...register("correo", { required: true })}
                           placeholder="Ejemplo: camilo@mail.com"
+                          defaultValue={(params.id !== "new" ? usuario?.correo: "")}
                         />
+                        {errors.correo && (
+                          <span className="text-danger">
+                            El correo es obligatorio...
+                          </span>
+                        )}
                       </div>
                       <div className="form-group">
                         <label>Tipo de documento</label>
-                        <select className="form-control" name="tipoDoc">
+                        <select
+                          defaultValue={(params.id !== "new" ? usuario?.tipoDoc: "")}
+                          className="form-control"
+                          {...register("tipoDoc")}
+                        >
                           <option value={"CC"}>Cédula de ciudadanía</option>
                           <option value={"CE"}>Cédula de extrangería</option>
                           <option value={"TI"}>Tarjeta de identidad</option>
@@ -86,9 +162,15 @@ const {nombre, apellido, cedula, correo, password, tipoDoc, telefono} = event.ta
                           type="number"
                           className="form-control"
                           id="cedula"
-                          name="cedula"
+                          {...register("cedula", { required: true })}
                           placeholder="Ejemplo: 12345678"
+                          defaultValue={(params.id !== "new" ? usuario?.cedula: "")}
                         />
+                        {errors.cedula && (
+                          <span className="text-danger">
+                            La cedula es obligatoria...
+                          </span>
+                        )}
                       </div>
                       <div className="form-group">
                         <label htmlFor="telefono">Teléfono</label>
@@ -96,8 +178,9 @@ const {nombre, apellido, cedula, correo, password, tipoDoc, telefono} = event.ta
                           type="number"
                           className="form-control"
                           id="telefono"
-                          name="telefono"
+                          {...register("telefono")}
                           placeholder="Ejemplo: 3161234567"
+                          defaultValue={(params.id !== "new" ? usuario?.telefono: "")}
                         />
                       </div>
                       <div className="form-group">
@@ -106,9 +189,14 @@ const {nombre, apellido, cedula, correo, password, tipoDoc, telefono} = event.ta
                           type="password"
                           className="form-control"
                           id="password"
-                          name="password"
+                          {...register("password", { required: true })}
                           placeholder="Ejemplo: Cat1235**"
                         />
+                        {errors.password && (
+                          <span className="text-danger">
+                            La contraseña es obligatoria...
+                          </span>
+                        )}
                       </div>
                     </div>
                     <div className="card-footer">

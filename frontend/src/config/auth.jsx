@@ -1,14 +1,11 @@
-import React from 'react'
-import { Navigate } from 'react-router-dom'
-import Home from '../pages/admin/home'
 
-export default function PrivateRoute( {children} ) {
-    
-    const token = localStorage.getItem("token")
+import { Navigate } from "react-router-dom";
 
-    if (token) {
-        return children
-    } else return(
-        <Navigate to={"/login"} />
-    )
+export default function PrivateRoute({ children , isAuth}) {
+
+    console.log("Se reenderizó el componente privateRoute");
+
+  if (isAuth) {
+    return children
+  } else return <Navigate to={"/login"} />;
 }

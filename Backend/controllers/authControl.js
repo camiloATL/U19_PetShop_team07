@@ -27,4 +27,8 @@ async function login(req = request, res = response) {
   }
 }
 
-module.exports = { login };
+function validarJWT(req, res) {
+  res.status(200).send({auth:true})
+}
+
+module.exports = { login , validarJWT};

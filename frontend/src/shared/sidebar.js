@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import imagen from "../logo.svg";
 import "./sidebar.css";
-import { Link } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
+import { FaUserAstronaut, FaUserPlus, FaUsers } from "react-icons/fa"
 
 export default function Sidebar() {
 
@@ -42,22 +43,23 @@ export default function Sidebar() {
                 setItemUsuarioOpen(!itemUsuarioOpen)
               } }> 
                 <p>
+                  <FaUserAstronaut size={24} className="nav-icon"/>
                   Usuarios
                   <i className="right fas fa-angle-left" />
                 </p>
               </div>
               <ul className="nav nav-treeview">
                 <li className="nav-item">
-                  <Link to="/" className="nav-link">
-                    <i className="far fa-circle nav-icon" />
+                  <NavLink to="/admin/usuarios/all" className="nav-link" end="true">
+                    <FaUsers size={24} className="nav-icon" />
                     <p>Listar</p>
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="nav-item">
-                  <Link to="/" className="nav-link">
-                    <i className="far fa-circle nav-icon" />
-                    <p>Crear</p>
-                  </Link>
+                  <NavLink to="/admin/usuario/new" className="nav-link" end ="true">
+                    <FaUserPlus size={24} className="nav-icon"/>
+                    <p>Crear o Modificar</p>
+                  </NavLink>
                 </li>
               </ul>
             </li>

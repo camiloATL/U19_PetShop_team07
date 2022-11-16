@@ -1,7 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { BASE_URL } from "../../config/constants";
+import { BASE_URL, Toast } from "../../config/constants";
 import Header from "../../shared/header";
 
 export default function Usuarios() {
@@ -20,6 +20,27 @@ export default function Usuarios() {
     return () => {};
   }, []);
 
+  function borrarUsuario(event) {
+    const { id } = event.target;
+
+    // BORRAR EL USUARIO
+    axios
+      .delete(BASE_URL + "/cliente", {
+        data: { id },
+        headers: { Authorization: token },
+      })
+      .then((res) => {
+        //setReload( !reload )
+        Toast.fire({ icon: "warning", title: "Se borro el usuario" });
+      })
+      .catch((err) => {
+        Toast.fire({
+          icon: "error ",
+          title: "Hubo un error al borrar el usuario",
+        });
+      });
+  }
+
   return (
     <>
       <Header title={"Lista de usuarios"} path="usuarios" pathName="Usuarios" />
@@ -28,9 +49,7 @@ export default function Usuarios() {
         <div className="row">
           <div className="col">
             <div className="card">
-              <div className="card-header">
-              Tabla de Usuarios
-              </div>
+              <div className="card-header">Tabla de Usuarios</div>
               <div className="card-body">
                 <table
                   id="example2"
@@ -114,11 +133,20 @@ export default function Usuarios() {
                               role="group"
                               aria-label="Opciones"
                             >
-                              <button type="button" className="btn btn-danger">
-                              Eliminar
+                              <button
+                                id={usuario._id}
+                                type="button"
+                                className="btn btn-danger"
+                                onClick={borrarUsuario}
+                              >
+                                Eliminar
                               </button>
-                              <Link type="button" className="btn btn-success" to={"/admin/usuario/"+usuario._id}>
-                              Actualizar
+                              <Link
+                                type="button"
+                                className="btn btn-success"
+                                to={"/admin/usuario/" + usuario._id}
+                              >
+                                Actualizar
                               </Link>
                             </div>
                           </td>

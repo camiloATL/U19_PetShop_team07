@@ -13,7 +13,7 @@ function App() {
   const token = localStorage.getItem("token");
 
   useEffect(() => {
-    console.log("ejecutando useEffect");
+    
     axios
       .get(BASE_URL + "/auth/verify", { headers: { Authorization: token } })
       .then(() => {

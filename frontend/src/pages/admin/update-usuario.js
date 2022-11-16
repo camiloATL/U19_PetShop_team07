@@ -11,7 +11,7 @@ export default function UpdateUsuario() {
   const params = useParams();
 
   const [usuario, setUsuario] = useState(null);
-  const headers = { Authorization: localStorage.getItem("token") }
+  const headers = { Authorization: localStorage.getItem("token") };
 
   const {
     register,
@@ -36,49 +36,45 @@ export default function UpdateUsuario() {
     return () => {};
   }, []);
 
-  
-    //PETICION PARA CREAR USUARIO
+  //PETICION PARA CREAR USUARIO
   function submit(data) {
     if (params.id === "new") {
-    axios
-      .post(BASE_URL + "/cliente", data, {headers})
+      axios
+        .post(BASE_URL + "/cliente", data, { headers })
 
-      .then((res) => {
-        Toast.fire({
-          icon: "success",
-          title: "Se creo el usuario " + data.nombre,
+        .then((res) => {
+          Toast.fire({
+            icon: "success",
+            title: "Se creo el usuario " + data.nombre,
+          });
         })
-      })
-      .catch((err) => {
-        console.error(err);
-        Toast.fire({
-          icon: "error",
-          title: "Hubo un error al crear el usuario " + data.nombre,
+        .catch((err) => {
+          console.error(err);
+          Toast.fire({
+            icon: "error",
+            title: "Hubo un error al crear el usuario " + data.nombre,
+          });
+        });
+    } else {
+      //PETICION PARA MODIFICAR USUARIO
+      data.id = usuario._id;
+      axios
+        .put(BASE_URL + "/cliente", data, { headers })
+        .then((res) => {
+          Toast.fire({
+            icon: "success",
+            title: "Se modificó el usuario " + data.nombre,
+          });
         })
-      });
-  }else{
-    axios
-    .put(BASE_URL + "/cliente", data, {headers})
-    .then((res) => {
-      Toast.fire({
-        icon: "success",
-        title: "Se modificó el usuario " + data.nombre,
-      })
-    })
-    .catch((err) => {
-      console.error(err)
-      Toast.fire({
-        icon: "error",
-        title: "Hubo un error al crear el usuario",
-      })
-    })
+        .catch((err) => {
+          console.error(err);
+          Toast.fire({
+            icon: "error",
+            title: "Hubo un error al crear el usuario",
+          });
+        });
+    }
   }
-  
- 
-
-    //PETICION PARA MODIFICAR USUARIO
-    
-      }
   return (
     <>
       <Header title="Crear usuario" pathName={"usuario"} path="/" />
@@ -104,7 +100,9 @@ export default function UpdateUsuario() {
                             (errors.nombre ? " is-invalid" : "")
                           }
                           {...register("nombre", { required: true })}
-                          defaultValue={(params.id !== "new" ? usuario?.nombre: "")}
+                          defaultValue={
+                            params.id !== "new" ? usuario?.nombre : ""
+                          }
                         />
                         {errors.nombre && (
                           <span className="text-danger">
@@ -120,7 +118,9 @@ export default function UpdateUsuario() {
                           className="form-control"
                           placeholder="Ejemplo: Torres Lozano"
                           {...register("apellido", { required: true })}
-                          defaultValue={(params.id !== "new" ? usuario?.apellido: "")}
+                          defaultValue={
+                            params.id !== "new" ? usuario?.apellido : ""
+                          }
                         />
                         {errors.apellido && (
                           <span className="text-danger">
@@ -136,7 +136,9 @@ export default function UpdateUsuario() {
                           id="correo"
                           {...register("correo", { required: true })}
                           placeholder="Ejemplo: camilo@mail.com"
-                          defaultValue={(params.id !== "new" ? usuario?.correo: "")}
+                          defaultValue={
+                            params.id !== "new" ? usuario?.correo : ""
+                          }
                         />
                         {errors.correo && (
                           <span className="text-danger">
@@ -147,7 +149,9 @@ export default function UpdateUsuario() {
                       <div className="form-group">
                         <label>Tipo de documento</label>
                         <select
-                          defaultValue={(params.id !== "new" ? usuario?.tipoDoc: "")}
+                          defaultValue={
+                            params.id !== "new" ? usuario?.tipoDoc : ""
+                          }
                           className="form-control"
                           {...register("tipoDoc")}
                         >
@@ -164,7 +168,9 @@ export default function UpdateUsuario() {
                           id="cedula"
                           {...register("cedula", { required: true })}
                           placeholder="Ejemplo: 12345678"
-                          defaultValue={(params.id !== "new" ? usuario?.cedula: "")}
+                          defaultValue={
+                            params.id !== "new" ? usuario?.cedula : ""
+                          }
                         />
                         {errors.cedula && (
                           <span className="text-danger">
@@ -180,7 +186,9 @@ export default function UpdateUsuario() {
                           id="telefono"
                           {...register("telefono")}
                           placeholder="Ejemplo: 3161234567"
-                          defaultValue={(params.id !== "new" ? usuario?.telefono: "")}
+                          defaultValue={
+                            params.id !== "new" ? usuario?.telefono : ""
+                          }
                         />
                       </div>
                       <div className="form-group">

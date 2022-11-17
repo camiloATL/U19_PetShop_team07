@@ -17,6 +17,7 @@ export default function UpdateUsuario() {
     register,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
   useEffect(() => {
@@ -28,6 +29,7 @@ export default function UpdateUsuario() {
         })
         .then((res) => {
           setUsuario(res.data);
+          reset(res.data)
         })
         .catch(() => {
           Toast.fire({ icon: "error", title: "Hubo un error inesperado" });

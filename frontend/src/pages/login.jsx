@@ -3,7 +3,7 @@ import axios from "axios";
 import { useNavigate, Link } from "react-router-dom";
 import { BASE_URL } from "../config/constants";
 
-export default function Login( {titulo} ) {
+export default function Login( {titulo, setIsAuth} ) {
 
   const navigate = useNavigate();
 
@@ -20,7 +20,7 @@ export default function Login( {titulo} ) {
       });
       const {token} = res.data
       localStorage.setItem("token", token);
-
+      //setIsAuth(true)
       navigate("/admin");
     } catch (error) {
       alert("Credenciales incorrectas guero");

@@ -9,7 +9,11 @@ const productoSchema = Schema({
     precio: Number,//{type: Number, required: [true, "El precio es obligatorio"]},
     categoria: String, //{type: String, enum: ["Gatos","Perros","Otros"]},
     imagen: String,
-    tamaño: String
+    tamaño: String,
+    vendedor: {
+        type: Schema.Types.ObjectId,
+        ref: "usuario"
+    }
 },)
 
 const ProductoModel = model("producto", productoSchema);

@@ -79,3 +79,5 @@ async function eliminarProducto(req = request, res = response) {
 } */
 
 module.exports = { guardarProducto, guardarImagen, verImagen, verProductos, actualizarProducto, eliminarProducto };
+
+//Prueba 

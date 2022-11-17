@@ -14,7 +14,7 @@ async function login(req = request, res = response) {
     if (compareSync(password, usuario.password)) {
 
       //Se crea y se envía el token
-      sign({ id: usuario.id }, "p3tSh0pT34m7", {expiresIn: "5h"} ,(err, token) => {
+      sign({ id: usuario.id, tipo: usuario.tipo, nombre: usuario.nombre , apellido: usuario.apellido }, "p3tSh0pT34m7", {expiresIn: "5h"} ,(err, token) => {
         if (err) {
           res.status(500).send({ menasaje: "Hubo un error" });
         } else {

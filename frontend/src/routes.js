@@ -8,7 +8,7 @@ import Home from './pages/home'
 import Login from './pages/login'
 import Register from './pages/register'
 
-export default function RoutesApp(isAuth) {
+export default function RoutesApp(isAuth, setIsAuth) {
   return (
     <Routes>
         <Route index element={<Home />} />
@@ -23,7 +23,7 @@ export default function RoutesApp(isAuth) {
           <Route path='usuarios/all' element={<Usuarios />} />
           <Route path='usuario/:id' element={<UpdateUsuario />} />
         </Route>
-        <Route path="/login" element={<Login titulo={"Omega"} />} />
+        <Route path="/login" element={<Login titulo={"Omega"} setIsAuth={setIsAuth}/>} />
         <Route path="/register" element={<Register />} />
       </Routes>
   )

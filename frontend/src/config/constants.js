@@ -2,7 +2,7 @@ import Swal from "sweetalert2"
 import jwt_decode from "jwt-decode";
 
 //export const BASE_URL = "http://localhost:3001"
-export const BASE_URL = "https://https://vercel.com/camiloatl/u19-pet-shop-team07"
+export const BASE_URL = "https://vercel.com/camiloatl/u19-pet-shop-team07"
 
 
 export const Toast = Swal.mixin({

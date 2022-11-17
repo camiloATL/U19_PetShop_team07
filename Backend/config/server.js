@@ -1,7 +1,7 @@
 const express = require("express");
 const fileUpload = require("express-fileupload");
 const routerAuth = require("../routes/auth");
-const routerCliente = require("../routes/clienteRoute");
+const routerUsuario = require("../routes/usuarioRoute");
 const routerProducto = require("../routes/productoRoutes");
 const conexionDB = require("./database");
 const cors = require("cors")
@@ -27,7 +27,7 @@ class Server {
   }
 
   routes() {
-    this.app.use("/cliente", routerCliente);
+    this.app.use("/usuario", routerUsuario);
     this.app.use("/producto", routerProducto)
     this.app.use("/auth", routerAuth)
   }

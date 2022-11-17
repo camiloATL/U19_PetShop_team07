@@ -6,6 +6,7 @@ import UpdateUsuario from './pages/admin/update-usuario'
 import Usuarios from './pages/admin/usuarios'
 import Home from './pages/home'
 import Login from './pages/login'
+import Register from './pages/register'
 
 export default function RoutesApp(isAuth) {
   return (
@@ -23,6 +24,7 @@ export default function RoutesApp(isAuth) {
           <Route path='usuario/:id' element={<UpdateUsuario />} />
         </Route>
         <Route path="/login" element={<Login titulo={"Omega"} />} />
+        <Route path="/register" element={<Register />} />
       </Routes>
   )
 }

@@ -22,7 +22,7 @@ export default function UpdateUsuario() {
   useEffect(() => {
     if (params.id !== "new") {
       axios
-        .get(BASE_URL + "/cliente", {
+        .get(BASE_URL + "/usuario", {
           headers,
           params: { id: params.id },
         })
@@ -40,7 +40,7 @@ export default function UpdateUsuario() {
   function submit(data) {
     if (params.id === "new") {
       axios
-        .post(BASE_URL + "/cliente", data, { headers })
+        .post(BASE_URL + "/usuario", data, { headers })
 
         .then((res) => {
           Toast.fire({
@@ -59,7 +59,7 @@ export default function UpdateUsuario() {
       //PETICION PARA MODIFICAR USUARIO
       data.id = usuario._id;
       axios
-        .put(BASE_URL + "/cliente", data, { headers })
+        .put(BASE_URL + "/usuario", data, { headers })
         .then((res) => {
           Toast.fire({
             icon: "success",

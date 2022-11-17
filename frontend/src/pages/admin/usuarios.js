@@ -8,29 +8,30 @@ export default function Usuarios() {
   const token = localStorage.getItem("token");
 
   const [usuarios, setUsuarios] = useState(null);
+  const [reload, setReload] = useState(false)
 
   useEffect(() => {
     axios
-      .get(BASE_URL + "/cliente", { headers: { Authorization: token } })
+      .get(BASE_URL + "/usuario", { headers: { Authorization: token } })
       .then((res) => {
         setUsuarios(res.data);
       })
       .catch();
 
     return () => {};
-  }, []);
+  }, [reload, token]);
 
   function borrarUsuario(event) {
     const { id } = event.target;
 
     // BORRAR EL USUARIO
     axios
-      .delete(BASE_URL + "/cliente", {
+      .delete(BASE_URL + "/usuario", {
         data: { id },
         headers: { Authorization: token },
       })
       .then((res) => {
-        //setReload( !reload )
+        setReload( !reload )
         Toast.fire({ icon: "warning", title: "Se borro el usuario" });
       })
       .catch((err) => {

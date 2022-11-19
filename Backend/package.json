@@ -7,6 +7,10 @@
     "start": "node src/index.js",
     "serve": "nodemon src/index.js"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/camiloATL/U19_PetShop_team07.git"
+  },
   "keywords": [],
   "author": "",
   "license": "ISC",

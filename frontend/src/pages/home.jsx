@@ -32,6 +32,11 @@ export default function Home() {
               Regístrate
             </Link>
           </li>
+          <li className="nav-item d-none d-sm-inline-block">
+            <Link to={"/prueba"} className="nav-link">
+              Pagina de prueba
+            </Link>
+          </li>
         </ul>
       </nav>
       <div>

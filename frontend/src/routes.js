@@ -6,6 +6,7 @@ import UpdateUsuario from './pages/admin/update-usuario'
 import Usuarios from './pages/admin/usuarios'
 import Home from './pages/home'
 import Login from './pages/login'
+import Prueba from './pages/prueba'
 import Register from './pages/register'
 
 export default function RoutesApp(isAuth, setIsAuth) {
@@ -25,6 +26,7 @@ export default function RoutesApp(isAuth, setIsAuth) {
         </Route>
         <Route path="/login" element={<Login titulo={"Omega"} setIsAuth={setIsAuth}/>} />
         <Route path="/register" element={<Register />} />
+        <Route path="/prueba" element={<Prueba />} />
       </Routes>
   )
 }
